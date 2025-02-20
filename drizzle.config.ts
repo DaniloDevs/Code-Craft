@@ -6,6 +6,6 @@ export default {
   out: './src/drizzle/migrations/',
   dialect: 'postgresql',
   dbCredentials: {
-    url: env.REDIS_URL,
+    url: env.POSTGRES_URL,
   },
 } satisfies Config
