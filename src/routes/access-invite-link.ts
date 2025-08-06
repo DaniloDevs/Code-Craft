@@ -1,33 +1,33 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import z from 'zod'
-import { env } from '../../env'
+import { env } from '../../env/env'
 import { accessInviteLink } from '../functions/access-invite-link'
 
-export const AccessInviteLink: FastifyPluginAsyncZod = async server => {
-  server.get(
-    '/invites/:subscriberId',
-    {
-      schema: {
-        summary: 'Access invite link and redirects user',
-        tags: ['Referral'],
-        params: z.object({
-          subscriberId: z.string(),
-        }),
-        response: {
-          302: z.null(),
-        },
+export const AccessInviteLink: FastifyPluginAsyncZod = async (server) => {
+   server.get(
+      '/invites/:subscriberId',
+      {
+         schema: {
+            summary: 'Access invite link and redirects user',
+            tags: ['Referral'],
+            params: z.object({
+               subscriberId: z.string(),
+            }),
+            response: {
+               302: z.null(),
+            },
+         },
       },
-    },
-    async (request, reply) => {
-      const { subscriberId } = request.params
+      async (request, reply) => {
+         const { subscriberId } = request.params
 
-      await accessInviteLink({ subscriberId })
+         await accessInviteLink({ subscriberId })
 
-      const redirectUrl = new URL(env.WEB_URL)
+         const redirectUrl = new URL(env.WEB_URL)
 
-      redirectUrl.searchParams.set('referrer', subscriberId)
+         redirectUrl.searchParams.set('referrer', subscriberId)
 
-      return reply.redirect(redirectUrl.toString(), 302)
-    }
-  )
+         return reply.redirect(redirectUrl.toString(), 302)
+      },
+   )
 }

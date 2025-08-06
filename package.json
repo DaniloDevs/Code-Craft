@@ -18,6 +18,8 @@
     "@scalar/fastify-api-reference": "^1.25.119",
     "@types/node": "^22.13.4",
     "drizzle-orm": "^0.39.3",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
     "fastify": "^5.2.1",
     "fastify-type-provider-zod": "^4.0.2",
     "ioredis": "^5.5.0",
@@ -26,9 +28,14 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@eslint/js": "^9.32.0",
+    "@eslint/json": "^0.13.1",
     "drizzle-kit": "^0.30.4",
+    "eslint": "^9.32.0",
+    "globals": "^16.3.0",
+    "jiti": "^2.5.1",
     "tsup": "^8.3.6",
-    "tsx": "^4.19.2"
+    "tsx": "^4.19.2",
+    "typescript-eslint": "^8.39.0"
   }
 }
