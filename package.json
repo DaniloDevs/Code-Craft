@@ -17,6 +17,7 @@
     "@fastify/swagger-ui": "^5.2.2",
     "@scalar/fastify-api-reference": "^1.25.119",
     "@types/node": "^22.13.4",
+    "dotenv": "^17.2.1",
     "drizzle-orm": "^0.39.3",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",

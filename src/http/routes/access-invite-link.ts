@@ -1,7 +1,6 @@
+import { accessInviteLink } from '@src/useCases/access-invite-link'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import z from 'zod'
-import { env } from '../../env/env'
-import { accessInviteLink } from '../functions/access-invite-link'
 
 export const AccessInviteLink: FastifyPluginAsyncZod = async (server) => {
    server.get(
@@ -21,11 +20,7 @@ export const AccessInviteLink: FastifyPluginAsyncZod = async (server) => {
       async (request, reply) => {
          const { subscriberId } = request.params
 
-         await accessInviteLink({ subscriberId })
-
-         const redirectUrl = new URL(env.WEB_URL)
-
-         redirectUrl.searchParams.set('referrer', subscriberId)
+         const { redirectUrl } = await accessInviteLink({ subscriberId })
 
          return reply.redirect(redirectUrl.toString(), 302)
       },

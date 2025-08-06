@@ -1,6 +1,6 @@
+import { subscribeToEvent } from '@src/useCases/subscribe-to-event'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import z from 'zod'
-import { subscribeToEvent } from '../functions/subscribe-to-event'
 
 export const SubscribeToEvent: FastifyPluginAsyncZod = async (server) => {
    server.post(

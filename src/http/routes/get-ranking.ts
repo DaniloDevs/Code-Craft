@@ -1,6 +1,6 @@
+import { getRanking } from '@src/useCases/get-ranking'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import z from 'zod'
-import { getRanking } from '../functions/get-ranking'
 
 export const GetRanking: FastifyPluginAsyncZod = async (server) => {
    server.get(
@@ -20,7 +20,7 @@ export const GetRanking: FastifyPluginAsyncZod = async (server) => {
             }),
          },
       },
-      async (request, reply) => {
+      async (_, reply) => {
          const { rankingWithScore } = await getRanking()
 
          return reply.status(200).send({

@@ -8,26 +8,20 @@ import {
    serializerCompiler,
    validatorCompiler,
 } from 'fastify-type-provider-zod'
-import { AccessInviteLink } from './routes/access-invite-link'
-import { GetRanking } from './routes/get-ranking'
-import { GetSubscriberInviteClicks } from './routes/get-subscriber-invite-clicks'
-import { GetSubscriberInvitesCount } from './routes/get-subscriber-invites-count'
-import { GetSubscriberRankingPosition } from './routes/get-subscriber-ranking-position'
-import { SubscribeToEvent } from './routes/subscribe-to-event'
+import { SetupRoutes } from './http/routes/setup-route'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
-// Validadores e Compiladores
+// Plugins
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
-// Plugins
 app.register(fastifyCors)
 
 app.register(fastifySwagger, {
    openapi: {
       info: {
-         title: 'NLW Connect',
+         title: 'Sistema de indicação e rank',
          version: '0.0.1',
       },
    },
@@ -39,13 +33,6 @@ app.register(fastifySwaggerUi, {
 })
 
 // Register Routes
-app.register(SubscribeToEvent)
-app.register(AccessInviteLink)
-app.register(GetSubscriberInviteClicks)
-app.register(GetSubscriberInvitesCount)
-app.register(GetSubscriberRankingPosition)
-app.register(GetRanking)
-
-// Turning On The Server
+app.register(SetupRoutes)
 
 export { app }

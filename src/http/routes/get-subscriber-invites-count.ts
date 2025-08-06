@@ -1,6 +1,6 @@
+import { getSubscriberInvitesCount } from '@src/useCases/get-subscriber-invites-count'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import z from 'zod'
-import { getSubscriberInvitesCount } from '../functions/get-subscriber-invites-count'
 
 export const GetSubscriberInvitesCount: FastifyPluginAsyncZod = async (
    server,
