@@ -1,4 +1,4 @@
-import { getSubscriberInviteClicks } from '@src/useCases/get-subscriber-invite-clicks'
+import { getSubscriberInviteClicks } from '@src/services/get-subscriber-invite-clicks'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import z from 'zod'
 

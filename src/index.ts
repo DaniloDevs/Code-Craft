@@ -8,7 +8,7 @@ import {
    serializerCompiler,
    validatorCompiler,
 } from 'fastify-type-provider-zod'
-import { SetupRoutes } from './http/routes/setup-route'
+import { SetupRoutes } from './http/setup-route'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 

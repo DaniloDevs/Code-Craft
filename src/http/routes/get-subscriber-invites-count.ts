@@ -1,4 +1,4 @@
-import { getSubscriberInvitesCount } from '@src/useCases/get-subscriber-invites-count'
+import { getSubscriberInvitesCount } from '@src/services/get-subscriber-invites-count'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import z from 'zod'
 

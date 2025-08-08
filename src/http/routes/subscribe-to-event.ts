@@ -1,4 +1,6 @@
-import { subscribeToEvent } from '@src/useCases/subscribe-to-event'
+import { PrismaSubscriptionpRepository } from '@src/repositories/prisma-repository'
+import { RedisRepository } from '@src/repositories/redis-repository'
+import { SubscribeToEventService } from '@src/services/subscribe-to-event'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import z from 'zod'
 
@@ -26,7 +28,14 @@ export const SubscribeToEvent: FastifyPluginAsyncZod = async (server) => {
       async (request, reply) => {
          const { name, email, referrer } = request.body
 
-         const { subscriberId } = await subscribeToEvent({
+         const subscribeRepository = new PrismaSubscriptionpRepository()
+         const cacheRepository = new RedisRepository()
+         const subscribeToEvent = new SubscribeToEventService(
+            subscribeRepository,
+            cacheRepository,
+         )
+
+         const { subscriberId } = await subscribeToEvent.execute({
             name,
             email,
             referrerId: referrer,

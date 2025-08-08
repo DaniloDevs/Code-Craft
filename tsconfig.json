@@ -13,7 +13,6 @@
     "skipLibCheck": true,
     "moduleResolution": "node16",
     "paths": {
-      "@env/*": ["./env/*"],
       "@src/*": ["./src/*"],
     }
   }

@@ -1,4 +1,4 @@
-import { env } from '@env/env'
+import { env } from '@src/env/env'
 import { redis } from '../connection/redis-client'
 
 interface AccessInviteLinkParams {

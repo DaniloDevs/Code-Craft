@@ -1,4 +1,4 @@
-import { getSubscriberRankingPosition } from '@src/useCases/get-subscriber-ranking-position'
+import { getSubscriberRankingPosition } from '@src/services/get-subscriber-ranking-position'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import z from 'zod'
 
