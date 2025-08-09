@@ -1,18 +1,24 @@
 import { env } from '@src/env/env'
-import { redis } from '../connection/redis-client'
+import type { ICacheRepository } from '@src/repositories/cache-repository'
 
 interface AccessInviteLinkParams {
    subscriberId: string
 }
 
-export async function accessInviteLink({
-   subscriberId,
-}: AccessInviteLinkParams) {
-   await redis.hincrby('referral:access-count', subscriberId, 1)
+export class AccesseInviteLink {
+   constructor(private cacheRepository: ICacheRepository) {}
 
-   const redirectUrl = new URL(env.WEB_URL)
+   async execute({ subscriberId }: AccessInviteLinkParams) {
+      await this.cacheRepository.incrementValue(
+         'referral:access-count',
+         subscriberId,
+         1,
+      )
 
-   redirectUrl.searchParams.set('referrer', subscriberId)
+      const redirectUrl = new URL(env.WEB_URL)
 
-   return { redirectUrl }
+      redirectUrl.searchParams.set('referrer', subscriberId)
+
+      return { redirectUrl }
+   }
 }

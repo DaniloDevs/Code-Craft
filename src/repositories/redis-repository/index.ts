@@ -6,7 +6,15 @@ export class RedisRepository implements ICacheRepository {
       await redis.set(key, value)
    }
 
-   async incrementValue(key: string, increment: number, member: string) {
+   async incrementValueInRanking(
+      key: string,
+      increment: number,
+      member: string,
+   ) {
       await redis.zincrby(key, increment, member)
+   }
+
+   async incrementValue(key: string, member: string, increment: number) {
+      await redis.hincrby(key, member, increment)
    }
 }

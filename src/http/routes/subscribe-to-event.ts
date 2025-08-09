@@ -30,6 +30,7 @@ export const SubscribeToEvent: FastifyPluginAsyncZod = async (server) => {
 
          const subscribeRepository = new PrismaSubscriptionpRepository()
          const cacheRepository = new RedisRepository()
+
          const subscribeToEvent = new SubscribeToEventService(
             subscribeRepository,
             cacheRepository,

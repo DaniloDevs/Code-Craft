@@ -1,4 +1,5 @@
-import { accessInviteLink } from '@src/services/access-invite-link'
+import { RedisRepository } from '@src/repositories/redis-repository'
+import { AccesseInviteLink } from '@src/services/access-invite-link'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import z from 'zod'
 
@@ -20,7 +21,12 @@ export const AccessInviteLink: FastifyPluginAsyncZod = async (server) => {
       async (request, reply) => {
          const { subscriberId } = request.params
 
-         const { redirectUrl } = await accessInviteLink({ subscriberId })
+         const repository = new RedisRepository()
+         const accessInviteLink = new AccesseInviteLink(repository)
+
+         const { redirectUrl } = await accessInviteLink.execute({
+            subscriberId,
+         })
 
          return reply.redirect(redirectUrl.toString(), 302)
       },
