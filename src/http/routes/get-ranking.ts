@@ -1,4 +1,6 @@
-import { getRanking } from '@src/services/get-ranking'
+import { PrismaSubscriptionpRepository } from '@src/repositories/prisma-repository'
+import { RedisRepository } from '@src/repositories/redis-repository'
+import { GetRankingService } from '@src/services/get-ranking'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import z from 'zod'
 
@@ -21,7 +23,14 @@ export const GetRanking: FastifyPluginAsyncZod = async (server) => {
          },
       },
       async (_, reply) => {
-         const { rankingWithScore } = await getRanking()
+         const cacheRepository = new RedisRepository()
+         const subscribeRepository = new PrismaSubscriptionpRepository()
+         const getRanking = new GetRankingService(
+            cacheRepository,
+            subscribeRepository,
+         )
+
+         const { rankingWithScore } = await getRanking.execute()
 
          return reply.status(200).send({
             ranking: rankingWithScore,

@@ -16,4 +16,14 @@ export class PrismaSubscriptionpRepository implements ISubscriptionRepository {
 
       return subscriber
    }
+
+   async findByIds(ids: string[]) {
+      const subscribers = await prisma.subscription.findMany({
+         where: {
+            id: { in: ids },
+         },
+      })
+
+      return subscribers
+   }
 }

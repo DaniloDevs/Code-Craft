@@ -6,4 +6,10 @@ export interface ICacheRepository {
       increment: number,
       member: string,
    ): Promise<void>
+   getTopRanking(
+      key: string,
+      valueStart: string | number,
+      valueEnd: string | number,
+      withScores?: 'WITHSCORES',
+   ): Promise<string[]>
 }

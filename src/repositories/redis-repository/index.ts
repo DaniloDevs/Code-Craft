@@ -17,4 +17,13 @@ export class RedisRepository implements ICacheRepository {
    async incrementValue(key: string, member: string, increment: number) {
       await redis.hincrby(key, member, increment)
    }
+
+   async getTopRanking(
+      key: string,
+      valueStart: string | number,
+      valueEnd: string | number,
+      withScores: 'WITHSCORES',
+   ): Promise<string[]> {
+      return await redis.zrevrange(key, valueStart, valueEnd, withScores)
+   }
 }

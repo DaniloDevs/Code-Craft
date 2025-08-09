@@ -1,4 +1,4 @@
-import { env } from '@src/env/env'
+import { env } from '../env/env'
 import type { ICacheRepository } from '@src/repositories/cache-repository'
 
 interface AccessInviteLinkParams {
