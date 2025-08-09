@@ -28,7 +28,7 @@ export class SubscribeToEventService {
       })
 
       if (referrerId) {
-         await this.cacheRepository.incrementValue(
+         await this.cacheRepository.incrementValueInRanking(
             'referral:ranking',
             1,
             referrerId,
