@@ -1,34 +1,25 @@
 import { RedisRepository } from '@src/repositories/redis-repository'
-import { AccesseInviteLink } from '@src/services/access-invite-link'
-import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
-import z from 'zod'
+import { accessInviteLinkSchema } from '@src/http/@types/access-invite-schema'
+import type { ZodTypeProvider } from 'fastify-type-provider-zod'
+import { AccesseInviteLinkService } from '@src/services/access-invite-link'
+import { AccessInviteLinkController } from '../controllers/access-invite-link'
+import type { FastifyInstance } from 'fastify'
 
-export const AccessInviteLink: FastifyPluginAsyncZod = async (server) => {
-   server.get(
+export async function AccessInviteLink(server: FastifyInstance) {
+   const repository = new RedisRepository()
+   const service = new AccesseInviteLinkService(repository)
+   const accessInviteController = new AccessInviteLinkController(service)
+
+   server.withTypeProvider<ZodTypeProvider>().get(
       '/invites/:subscriberId',
       {
          schema: {
             summary: 'Access invite link and redirects user',
             tags: ['Referral'],
-            params: z.object({
-               subscriberId: z.string(),
-            }),
-            response: {
-               302: z.null(),
-            },
+            params: accessInviteLinkSchema.params,
+            response: accessInviteLinkSchema.response,
          },
       },
-      async (request, reply) => {
-         const { subscriberId } = request.params
-
-         const repository = new RedisRepository()
-         const accessInviteLink = new AccesseInviteLink(repository)
-
-         const { redirectUrl } = await accessInviteLink.execute({
-            subscriberId,
-         })
-
-         return reply.redirect(redirectUrl.toString(), 302)
-      },
+      async (request, reply) => accessInviteController.handle(request, reply),
    )
 }

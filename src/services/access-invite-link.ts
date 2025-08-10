@@ -5,7 +5,7 @@ interface AccessInviteLinkParams {
    subscriberId: string
 }
 
-export class AccesseInviteLink {
+export class AccesseInviteLinkService {
    constructor(private cacheRepository: ICacheRepository) {}
 
    async execute({ subscriberId }: AccessInviteLinkParams) {
