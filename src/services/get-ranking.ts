@@ -17,7 +17,9 @@ export class GetRankingService {
 
       const subscriberIdAndScore: Record<string, number> = {}
       for (let i = 0; i < ranking.length; i += 2) {
-         subscriberIdAndScore[ranking[i]] = i + 1
+         const subscriberId = ranking[i]
+         const score = parseFloat(ranking[i + 1])
+         subscriberIdAndScore[subscriberId] = score
       }
 
       const subscribers = await this.subscriptionRepository.findByIds(
