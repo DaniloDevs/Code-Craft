@@ -1,6 +1,6 @@
 import z from 'zod'
 
-export const getSubscribersInviteClicksSchema = {
+export const getSubscribersRankingPosition = {
    params: z.object({
       subscriberId: z.string(),
    }),
@@ -12,5 +12,5 @@ export const getSubscribersInviteClicksSchema = {
 }
 
 export type getSubscribersInviteClicksParams = z.infer<
-   typeof getSubscribersInviteClicksSchema.params
+   typeof getSubscribersRankingPosition.params
 >

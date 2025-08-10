@@ -6,7 +6,7 @@ export const getSubscribersInviteCountSchema = {
    }),
    response: z.object({
       200: z.object({
-         count: z.number(),
+         count: z.number().nullable(),
       }),
    }),
 }
