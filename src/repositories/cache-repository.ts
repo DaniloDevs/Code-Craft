@@ -21,5 +21,6 @@ export interface ICacheRepository {
       end: number,
       withScores?: boolean,
    ): Promise<string[]>
+   rankingGetPosition(key: string, member: string): Promise<number | null>
    rankingGetScore(key: string, member: string): Promise<string | null>
 }

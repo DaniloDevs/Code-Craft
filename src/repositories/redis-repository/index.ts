@@ -38,4 +38,10 @@ export class RedisRepository implements ICacheRepository {
    async rankingGetScore(key: string, member: string): Promise<string | null> {
       return await redis.zscore(key, member)
    }
+   async rankingGetPosition(
+      key: string,
+      member: string,
+   ): Promise<number | null> {
+      return await redis.zrevrank(key, member)
+   }
 }

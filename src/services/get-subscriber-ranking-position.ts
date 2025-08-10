@@ -1,19 +1,24 @@
-import { redis } from '../connection/redis-client'
+import type { ICacheRepository } from '@src/repositories/cache-repository'
 
 interface GetSubscriberRankingPositionParams {
    subscriberId: string
 }
 
-export async function getSubscriberRankingPosition({
-   subscriberId,
-}: GetSubscriberRankingPositionParams) {
-   const rank = await redis.zrevrank('referral:ranking', subscriberId)
+export class getSubscriberRankingPositionService {
+   constructor(private cache: ICacheRepository) {}
 
-   if (rank === null) {
-      return {
-         position: null,
+   async execute({ subscriberId }: GetSubscriberRankingPositionParams) {
+      const rank = await this.cache.rankingGetPosition(
+         'referral:ranking',
+         subscriberId,
+      )
+
+      if (rank === null) {
+         return {
+            position: null,
+         }
       }
-   }
 
-   return { position: rank + 1 }
+      return { position: rank + 1 }
+   }
 }
