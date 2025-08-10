@@ -16,7 +16,6 @@ export const AccessInviteLink: FastifyPluginAsyncZod = async (server) => {
             summary: 'Access invite link and redirects user',
             tags: ['Referral'],
             params: accessInviteLinkSchema.params,
-            response: accessInviteLinkSchema.response,
          },
       },
       async (request, reply) => accessInviteController.handle(request, reply),

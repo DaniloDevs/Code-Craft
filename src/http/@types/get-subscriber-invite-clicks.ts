@@ -4,11 +4,11 @@ export const getSubscribersInviteClicksSchema = {
    params: z.object({
       subscriberId: z.string(),
    }),
-   response: z.object({
+   response: {
       200: z.object({
          count: z.number().nullable(),
       }),
-   }),
+   },
 }
 
 export type getSubscribersInviteClicksParams = z.infer<

@@ -1,7 +1,7 @@
 import z from 'zod'
 
 export const getRankingSchema = {
-   response: z.object({
+   response: {
       200: z.object({
          ranking: z.array(
             z.object({
@@ -11,5 +11,5 @@ export const getRankingSchema = {
             }),
          ),
       }),
-   }),
+   },
 }
