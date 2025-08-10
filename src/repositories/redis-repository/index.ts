@@ -2,28 +2,37 @@ import { redis } from '@src/connection/redis-client'
 import { type ICacheRepository } from './../cache-repository'
 
 export class RedisRepository implements ICacheRepository {
+   async get(key: string): Promise<string | null> {
+      return await redis.get(key)
+   }
+
    async set(key: string, value: string) {
       await redis.set(key, value)
    }
 
-   async incrementValueInRanking(
-      key: string,
-      increment: number,
-      member: string,
-   ) {
+   async hashIncrement(hashKey: string, field: string, increment: number) {
+      await redis.hincrby(hashKey, field, increment)
+   }
+
+   async hashSet(hashKey: string, field: string, value: string): Promise<void> {
+      await redis.hset(hashKey, field, value)
+   }
+   async hashGet(hashKey: string, field: string): Promise<string | null> {
+      return await redis.hget(hashKey, field)
+   }
+
+   async rankingIncrement(key: string, member: string, increment: number) {
       await redis.zincrby(key, increment, member)
    }
-
-   async incrementValue(key: string, member: string, increment: number) {
-      await redis.hincrby(key, member, increment)
-   }
-
-   async getTopRanking(
+   async rankingGetTop(
       key: string,
-      valueStart: string | number,
-      valueEnd: string | number,
-      withScores: 'WITHSCORES',
+      start: number,
+      end: number,
+      withScores?: boolean,
    ): Promise<string[]> {
-      return await redis.zrevrange(key, valueStart, valueEnd, withScores)
+      if (withScores) {
+         return await redis.zrevrange(key, start, end, 'WITHSCORES')
+      }
+      return await redis.zrevrange(key, start, end)
    }
 }

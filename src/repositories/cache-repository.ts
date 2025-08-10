@@ -1,15 +1,24 @@
 export interface ICacheRepository {
    set(key: string, value: string): Promise<void>
-   incrementValue(key: string, member: string, increment: number): Promise<void>
-   incrementValueInRanking(
-      key: string,
+   get(key: string): Promise<string | null>
+
+   hashSet(hashKey: string, field: string, value: string): Promise<void>
+   hashGet(hashKey: string, field: string): Promise<string | null>
+   hashIncrement(
+      hashKey: string,
+      field: string,
       increment: number,
-      member: string,
    ): Promise<void>
-   getTopRanking(
+
+   rankingIncrement(
       key: string,
-      valueStart: string | number,
-      valueEnd: string | number,
-      withScores?: 'WITHSCORES',
+      member: string,
+      increment: number,
+   ): Promise<void>
+   rankingGetTop(
+      key: string,
+      start: number,
+      end: number,
+      withScores?: boolean,
    ): Promise<string[]>
 }
