@@ -1,40 +1,25 @@
+import { getRankingSchema } from '../@types/get-ranking-schema'
 import { PrismaSubscriptionpRepository } from '@src/repositories/prisma-repository'
 import { RedisRepository } from '@src/repositories/redis-repository'
 import { GetRankingService } from '@src/services/get-ranking'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
-import z from 'zod'
+import { GetRankingController } from '../controllers/get-ranking'
 
 export const GetRanking: FastifyPluginAsyncZod = async (server) => {
+   const cacheRepository = new RedisRepository()
+   const subscribeRepository = new PrismaSubscriptionpRepository()
+   const service = new GetRankingService(cacheRepository, subscribeRepository)
+   const getRankingController = new GetRankingController(service)
+
    server.get(
       '/ranking',
       {
          schema: {
             summary: 'Get ranking',
             tags: ['Referral'],
-            200: z.object({
-               ranking: z.array(
-                  z.object({
-                     id: z.string(),
-                     name: z.string(),
-                     score: z.number(),
-                  }),
-               ),
-            }),
+            response: getRankingSchema.response,
          },
       },
-      async (_, reply) => {
-         const cacheRepository = new RedisRepository()
-         const subscribeRepository = new PrismaSubscriptionpRepository()
-         const getRanking = new GetRankingService(
-            cacheRepository,
-            subscribeRepository,
-         )
-
-         const { rankingWithScore } = await getRanking.execute()
-
-         return reply.status(200).send({
-            ranking: rankingWithScore,
-         })
-      },
+      async (_, reply) => getRankingController.handle(_, reply),
    )
 }
