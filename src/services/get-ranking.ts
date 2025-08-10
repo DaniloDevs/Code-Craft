@@ -8,11 +8,11 @@ export class GetRankingService {
    ) {}
 
    async execute() {
-      const ranking = await this.cacheRepository.getTopRanking(
+      const ranking = await this.cacheRepository.rankingGetTop(
          'referral:ranking',
          0,
          2,
-         'WITHSCORES',
+         true,
       )
 
       const subscriberIdAndScore: Record<string, number> = {}

@@ -9,7 +9,7 @@ export class AccesseInviteLinkService {
    constructor(private cacheRepository: ICacheRepository) {}
 
    async execute({ subscriberId }: AccessInviteLinkParams) {
-      await this.cacheRepository.incrementValue(
+      await this.cacheRepository.hashIncrement(
          'referral:access-count',
          subscriberId,
          1,
